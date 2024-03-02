@@ -1,0 +1,55 @@
+package sorting_test
+
+import (
+	"dsa/src/sorting"
+	"testing"
+
+	"github.com/google/go-cmp/cmp"
+)
+
+var input []int
+var expected = []int{5, 12, 23, 34, 45, 56, 67, 78, 89, 90}
+
+func setup() {
+	input = []int{23, 45, 67, 12, 89, 34, 56, 78, 90, 5}
+}
+
+func TestBubbleSort(t *testing.T) {
+	setup()
+	result := sorting.BubbleSort(input)
+
+	if diff := cmp.Diff(expected, result); diff != "" {
+		t.Error(diff)
+	}
+
+}
+
+func TestInsertionSort(t *testing.T) {
+	setup()
+	result := sorting.InsertionSort(input)
+
+	if diff := cmp.Diff(expected, result); diff != "" {
+		t.Error(diff)
+	}
+
+}
+
+func TestMergeSort(t *testing.T) {
+	setup()
+
+	result := sorting.MergeSort(input)
+
+	if diff := cmp.Diff(expected, result); diff != "" {
+		t.Error(diff)
+	}
+}
+
+func TestHeapSort(t *testing.T) {
+	setup()
+
+	result := sorting.HeapSort(input)
+
+	if diff := cmp.Diff(expected, result); diff != "" {
+		t.Error(diff)
+	}
+}
