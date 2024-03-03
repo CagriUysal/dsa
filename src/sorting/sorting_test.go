@@ -62,3 +62,13 @@ func TestQuickSort(t *testing.T) {
 		t.Error(diff)
 	}
 }
+
+func TestCountSort(t *testing.T) {
+	input := []int{2, 5, 3, 0, 2, 3, 0, 3}
+
+	result := sorting.CountingSort(input, 5)
+	expected := []int{0, 0, 2, 2, 3, 3, 3, 5}
+	if diff := cmp.Diff(expected, result); diff != "" {
+		t.Error(diff)
+	}
+}
