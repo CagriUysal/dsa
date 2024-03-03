@@ -72,3 +72,13 @@ func TestCountSort(t *testing.T) {
 		t.Error(diff)
 	}
 }
+
+func TestRadixSort(t *testing.T) {
+	input := []int{329, 547, 657, 839, 436, 720, 355, 7}
+
+	result := sorting.RadixSort(input, 3)
+	expected := []int{7, 329, 355, 436, 547, 657, 720, 839}
+	if diff := cmp.Diff(expected, result); diff != "" {
+		t.Error(diff)
+	}
+}
