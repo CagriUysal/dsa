@@ -53,3 +53,12 @@ func TestHeapSort(t *testing.T) {
 		t.Error(diff)
 	}
 }
+
+func TestQuickSort(t *testing.T) {
+	setup()
+
+	result := sorting.QuickSort(input)
+	if diff := cmp.Diff(expected, result); diff != "" {
+		t.Error(diff)
+	}
+}
