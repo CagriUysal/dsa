@@ -82,3 +82,13 @@ func TestRadixSort(t *testing.T) {
 		t.Error(diff)
 	}
 }
+
+func TestBucketSort(t *testing.T) {
+	input := []float64{0.78, 0.17, 0.39, 0.26, 0.72, 0.94, 0.21, 0.12, 0.23, 0.68}
+
+	result := sorting.BucketSort(input)
+	expected := []float64{0.12, 0.17, 0.21, 0.23, 0.26, 0.39, 0.68, 0.72, 0.78, 0.94}
+	if diff := cmp.Diff(expected, result); diff != "" {
+		t.Error(diff)
+	}
+}
