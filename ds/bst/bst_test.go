@@ -1,7 +1,7 @@
 package bst_test
 
 import (
-	"dsa/src/bst"
+	"dsa/ds/bst"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"

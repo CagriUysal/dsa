@@ -1,7 +1,7 @@
 package stack_test
 
 import (
-	"dsa/src/stack"
+	"dsa/ds/stack"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"

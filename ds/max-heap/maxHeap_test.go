@@ -1,7 +1,7 @@
 package maxHeap_test
 
 import (
-	"dsa/src/maxHeap"
+	"dsa/ds/max-heap"
 	"fmt"
 	"testing"
 

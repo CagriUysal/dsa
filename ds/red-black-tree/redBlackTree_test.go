@@ -1,7 +1,7 @@
 package redblacktree_test
 
 import (
-	rb "dsa/src/red-black-tree"
+	rb "dsa/ds/red-black-tree"
 	"testing"
 )
 

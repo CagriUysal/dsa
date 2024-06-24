@@ -1,7 +1,7 @@
 package sorting
 
 import (
-	"dsa/src/maxHeap"
+	"dsa/ds/max-heap"
 )
 
 func HeapSort(arr []int) []int {

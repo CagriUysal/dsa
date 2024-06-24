@@ -1,7 +1,7 @@
 package queue_test
 
 import (
-	"dsa/src/queue"
+	"dsa/ds/queue"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"

@@ -1,7 +1,7 @@
 package sorting_test
 
 import (
-	"dsa/src/sorting"
+	"dsa/algo/sorting"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
