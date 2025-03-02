@@ -1,5 +1,21 @@
 package bst
 
+/*
+Binary Search Tree (BST) Properties:
+
+1. Each node contains a unique key (no duplicates)
+2. For any node:
+  - All keys in the left subtree are less than the node's key
+  - All keys in the right subtree are greater than the node's key
+3. The left and right subtrees are also binary search trees
+4. Operations:
+  - Search: O(h) time, where h is height of tree
+  - Insert: O(h) time
+  - Delete: O(h) time
+  - Best case (balanced): h = log n
+  - Worst case (unbalanced): h = n
+*/
+
 type Node struct {
 	Key    int
 	Left   *Node
