@@ -1,12 +1,19 @@
-package maxHeap
+// Properties:
+//  1. Complete Binary Tree: All levels are filled except possibly the last level,
+//     which is filled from left to right.
+//  2. Heap Property: For any given node i,
+//     - Value of node i is greater than or equal to its children
+//     - A[parent(i)] ≥ A[i]
+//     - Root contains the maximum element
+
+package heap
 
 import (
 	"math"
 )
 
 type MaxHeap struct {
-	Arr      []int
-	HeapSize int
+	Heap
 }
 
 func (h *MaxHeap) BuildMaxHeap(arr []int) {
@@ -20,8 +27,8 @@ func (h *MaxHeap) BuildMaxHeap(arr []int) {
 // heapify ith index
 // assumes left(i) and right(i) are valid heaps
 func (h *MaxHeap) Heapify(i int) {
-	l := left(i)
-	r := right(i)
+	l := h.left(i)
+	r := h.right(i)
 
 	largest := i
 	if l < h.HeapSize && h.Arr[l] > h.Arr[largest] {
@@ -65,7 +72,7 @@ func (h *MaxHeap) IncreaseKey(i, k int) {
 	h.Arr[i] = k
 
 	for i > 0 {
-		p := parent(i)
+		p := h.parent(i)
 		if h.Arr[p] > h.Arr[i] {
 			break
 		}
@@ -75,29 +82,12 @@ func (h *MaxHeap) IncreaseKey(i, k int) {
 }
 
 func (h *MaxHeap) Insert(k int) {
-	h.HeapSize += 1
+	if h.HeapSize == len(h.Arr) {
+		h.Arr = append(h.Arr, math.MinInt)
+	} else {
+		h.Arr[h.HeapSize] = math.MinInt
+	}
 
-	minInt := math.MinInt
-	h.Arr = append(h.Arr, minInt)
-
+	h.HeapSize++
 	h.IncreaseKey(h.HeapSize-1, k)
-}
-
-func (h *MaxHeap) swap(i, j int) {
-	h.Arr[i], h.Arr[j] = h.Arr[j], h.Arr[i]
-}
-
-// give the parent index in the heap
-func parent(i int) int {
-	return (i - 1) / 2
-}
-
-// give the left index in the heap
-func left(i int) int {
-	return 2*i + 1
-}
-
-// give the right index in the heap
-func right(i int) int {
-	return 2*i + 2
 }
