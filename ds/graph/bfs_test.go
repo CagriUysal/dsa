@@ -9,9 +9,9 @@ import (
 
 func TestAdjListGraph_BFS(t *testing.T) {
 	tests := []struct {
-		name         string
-		graph        *graph.AdjListGraph
-		startNode    int
+		name          string
+		graph         *graph.AdjListGraph
+		startNode     int
 		wantDistances map[int]int
 	}{
 		{
@@ -38,8 +38,8 @@ func TestAdjListGraph_BFS(t *testing.T) {
 			name: "Graph with disconnected component",
 			graph: func() *graph.AdjListGraph {
 				g := graph.NewGraph()
-				g.AddEdge(0, 1) 
-				g.AddEdge(2, 3) 
+				g.AddEdge(0, 1)
+				g.AddEdge(2, 3)
 				return g
 			}(),
 			startNode: 0,
@@ -79,8 +79,8 @@ func TestAdjListGraph_BFS(t *testing.T) {
 		{
 			name:          "Empty graph",
 			graph:         graph.NewGraph(),
-			startNode:     0, 
-			wantDistances: map[int]int{0: 0}, 
+			startNode:     0,
+			wantDistances: map[int]int{0: 0},
 		},
 		{
 			name: "Linear graph",
@@ -105,7 +105,8 @@ func TestAdjListGraph_BFS(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gotDistances := tt.graph.BFS(tt.startNode)
+			g := tt.graph
+			gotDistances := graph.BFS(g, tt.startNode)
 			// Use cmpopts.EquateEmpty() because an empty map and a nil map should be considered equal in tests
 			// However, BFS initializes the map, so it will be empty, not nil.
 			// Let's compare maps directly. If wantDistances is nil (e.g., empty graph test), create an empty map.
