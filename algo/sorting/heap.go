@@ -1,11 +1,11 @@
 package sorting
 
 import (
-	"dsa/ds/max-heap"
+	heap "dsa/ds/heap"
 )
 
 func HeapSort(arr []int) []int {
-	maxHeap := maxHeap.MaxHeap{}
+	maxHeap := heap.MaxHeap{}
 	maxHeap.BuildMaxHeap(arr)
 
 	for i := len(maxHeap.Arr) - 1; i >= 0; i -= 1 {
