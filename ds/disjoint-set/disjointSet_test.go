@@ -10,20 +10,20 @@ import (
 )
 
 func TestMakeSet(t *testing.T) {
-	dsObj := ds.NewDisjointSet() 
+	dsObj := ds.NewDisjointSet[int]()
 	dsObj.MakeSet(1)
 
-	if _, exists := dsObj.Elements[1]; !exists { 
+	if _, exists := dsObj.Elements[1]; !exists {
 		t.Fatalf("MakeSet(1) failed, element not found in map")
 	}
 
-	got := dsObj.Elements[1] 
+	got := dsObj.Elements[1]
 	// Create expected element, Parent will be checked separately
-	want := &ds.Element{Value: 1, Rank: 0} 
+	want := &ds.Element[int]{Value: 1, Rank: 0}
 
 	// Allow comparing unexported Parent field by ignoring it initially
 	// We need to compare pointers for Parent check later.
-	opts := cmpopts.IgnoreFields(ds.Element{}, "Parent") 
+	opts := cmpopts.IgnoreFields(ds.Element[int]{}, "Parent")
 
 	if diff := cmp.Diff(want, got, opts); diff != "" {
 		t.Errorf("MakeSet(1) returned diff (-want +got):\n%s", diff)
@@ -34,18 +34,18 @@ func TestMakeSet(t *testing.T) {
 	}
 
 	// Test making a set that already exists
-	initialElementPtr := dsObj.Elements[1] 
-	dsObj.MakeSet(1) 
-	if dsObj.Elements[1] != initialElementPtr { 
+	initialElementPtr := dsObj.Elements[1]
+	dsObj.MakeSet(1)
+	if dsObj.Elements[1] != initialElementPtr {
 		t.Errorf("MakeSet(1) on existing element created a new element instance")
 	}
-	if len(dsObj.Elements) != 1 { 
+	if len(dsObj.Elements) != 1 {
 		 t.Errorf("MakeSet(1) on existing element changed map size: got %d, want 1", len(dsObj.Elements))
 	}
 }
 
 func TestFindSet(t *testing.T) {
-	dsObj := ds.NewDisjointSet() 
+	dsObj := ds.NewDisjointSet[int]()
 
 	// Test finding non-existent element
 	if got := dsObj.FindSet(1); got != nil {
@@ -56,9 +56,9 @@ func TestFindSet(t *testing.T) {
 	dsObj.MakeSet(2)
 	dsObj.MakeSet(3)
 
-	e1 := dsObj.Elements[1] 
-	e2 := dsObj.Elements[2] 
-	e3 := dsObj.Elements[3] 
+	e1 := dsObj.Elements[1]
+	e2 := dsObj.Elements[2]
+	e3 := dsObj.Elements[3]
 
 	// Create a chain: 1 -> 2 -> 3 (root)
 	e1.Parent = e2
@@ -90,7 +90,7 @@ func TestFindSet(t *testing.T) {
 
 
 func TestUnion(t *testing.T) {
-	dsObj := ds.NewDisjointSet() 
+	dsObj := ds.NewDisjointSet[int]()
 
 	dsObj.MakeSet(1)
 	dsObj.MakeSet(2)
@@ -98,12 +98,12 @@ func TestUnion(t *testing.T) {
 	dsObj.MakeSet(4)
 	dsObj.MakeSet(5)
 
-	e1 := dsObj.Elements[1] 
-	e2 := dsObj.Elements[2] 
+	e1 := dsObj.Elements[1]
+	e2 := dsObj.Elements[2]
 	e3 := dsObj.Elements[3]
 	e4 := dsObj.Elements[4]
 	// e5 is unused but let's get it for consistency if needed later
-	// e5 := dsObj.Elements[5] 
+	// e5 := dsObj.Elements[5]
 
 
 	// --- Union 1 and 2 (rank 0 + rank 0) ---
@@ -191,7 +191,7 @@ func TestUnion(t *testing.T) {
 	// --- Test union by rank specifically ---
 	dsObj.MakeSet(6)
 	dsObj.MakeSet(7) // unused
-	e6 := dsObj.Elements[6] 
+	e6 := dsObj.Elements[6]
 	e6.Rank = 3 // Make rank of 6 higher than {1,2,3,4}'s root (rank 2)
 
 	root1BeforeRankUnion := dsObj.FindSet(1)
@@ -214,8 +214,8 @@ func TestUnion(t *testing.T) {
 	// --- Test union of equal, non-zero ranks ---
 	dsObj.MakeSet(8)
 	dsObj.MakeSet(9)
-	e8 := dsObj.Elements[8] 
-	e9 := dsObj.Elements[9] 
+	e8 := dsObj.Elements[8]
+	e9 := dsObj.Elements[9]
 	e8.Rank = 5
 	e9.Rank = 5
 

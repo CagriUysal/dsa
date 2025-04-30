@@ -1,27 +1,27 @@
 package disjointset
 
-type Element struct {
-	Value  int
-	Parent *Element
+type Element[T comparable] struct {
+	Value  T
+	Parent *Element[T]
 	Rank   int
 }
 
-type DisjointSet struct {
-	Elements map[int]*Element
+type DisjointSet[T comparable] struct {
+	Elements map[T]*Element[T]
 }
 
-func NewDisjointSet() *DisjointSet {
-	return &DisjointSet{
-		Elements: make(map[int]*Element),
+func NewDisjointSet[T comparable]() *DisjointSet[T] {
+	return &DisjointSet[T]{
+		Elements: make(map[T]*Element[T]),
 	}
 }
 
-func (ds *DisjointSet) MakeSet(value int) {
+func (ds *DisjointSet[T]) MakeSet(value T) {
 	if _, exists := ds.Elements[value]; exists {
 		return
 	}
 
-	element := &Element{
+	element := &Element[T]{
 		Value: value,
 		Rank:  0,
 	}
@@ -30,7 +30,7 @@ func (ds *DisjointSet) MakeSet(value int) {
 	ds.Elements[value] = element
 }
 
-func (ds *DisjointSet) FindSet(value int) *Element {
+func (ds *DisjointSet[T]) FindSet(value T) *Element[T] {
 	element, exists := ds.Elements[value]
 	if !exists {
 		return nil
@@ -44,7 +44,7 @@ func (ds *DisjointSet) FindSet(value int) *Element {
 	return element.Parent
 }
 
-func (ds *DisjointSet) Union(x, y int) {
+func (ds *DisjointSet[T]) Union(x, y T) {
 	root1 := ds.FindSet(x)
 	root2 := ds.FindSet(y)
 
