@@ -6,38 +6,6 @@ import (
 	"sort"
 )
 
-type Edge struct {
-	From   string
-	To     string
-	Weight int
-}
-
-type WeightedGraph struct {
-	AdjList map[string][]Edge
-}
-
-func (g *WeightedGraph) AddVertex(v string) {
-	if g.AdjList == nil {
-		g.AdjList = make(map[string][]Edge)
-	}
-
-	if _, exists := g.AdjList[v]; !exists {
-		g.AdjList[v] = []Edge{}
-	}
-}
-
-func (g *WeightedGraph) AddEdge(from string, to string, weight int) {
-	if g.AdjList == nil {
-		g.AdjList = make(map[string][]Edge)
-	}
-
-	g.AddVertex(from)
-	g.AddVertex(to)
-
-	g.AdjList[from] = append(g.AdjList[from], Edge{From: from, To: to, Weight: weight})
-	g.AdjList[to] = append(g.AdjList[to], Edge{From: to, To: from, Weight: weight})
-}
-
 // Finds minimum spanning tree in a weighted connected graph.
 func MstKruskal(g WeightedGraph) []Edge {
 	ds := disjointset.NewDisjointSet[string]()
