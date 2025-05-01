@@ -2,7 +2,8 @@ package graph
 
 // UnweightedGraph represents an unweighted, undirected graph using an adjacency list.
 type UnweightedGraph struct {
-	AdjList map[int][]int
+	AdjList  map[int][]int
+	directed bool
 }
 
 func NewGraph() *UnweightedGraph {
@@ -22,7 +23,16 @@ func (g *UnweightedGraph) AddEdge(u, v int) {
 	g.AddVertex(v)
 
 	g.AdjList[u] = append(g.AdjList[u], v)
-	g.AdjList[v] = append(g.AdjList[v], u)
+	if !g.directed {
+		g.AdjList[v] = append(g.AdjList[v], u)
+	}
+}
+
+func NewUnweightedGraph(directed bool) *UnweightedGraph {
+	return &UnweightedGraph{
+		AdjList:  make(map[int][]int),
+		directed: directed,
+	}
 }
 
 type Edge struct {
@@ -66,4 +76,9 @@ func NewWeightedGraph(directed bool) *WeightedGraph {
 		AdjList:  make(map[string][]Edge),
 		directed: directed,
 	}
+}
+
+type ShortestPath struct {
+	distances map[string]int
+	parents   map[string]*string
 }

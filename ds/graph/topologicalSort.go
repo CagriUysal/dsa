@@ -2,46 +2,17 @@ package graph
 
 import "fmt"
 
-type DirectedGraph struct {
-	AdjList map[int][]int
-}
-
-func NewDirectedGraph() *DirectedGraph {
-	return &DirectedGraph{
-		AdjList: make(map[int][]int),
-	}
-}
-
-// AddVertex adds a vertex to the graph. If the vertex already exists,
-// this is a no-op.
-func (g *DirectedGraph) AddVertex(v int) {
-	if _, exists := g.AdjList[v]; exists {
-		return
-	}
-
-	g.AdjList[v] = []int{}
-}
-
-// AddEdge adds a directed edge from vertex u to vertex v.
-// It automatically adds the vertices if they don't exist.
-func (g *DirectedGraph) AddEdge(u, v int) {
-	g.AddVertex(u)
-	g.AddVertex(v)
-
-	g.AdjList[u] = append(g.AdjList[u], v)
-}
-
-func (g *DirectedGraph) TopologicalSort() ([]int, error) {
+func TopologicalSort(g WeightedGraph) ([]string, error) {
 	//  0 = unvisited, 1 = visiting (in current recursion stack), 2 = visited (finished)
-	visited := make(map[int]int)
-	var sortedOrder []int
+	visited := make(map[string]int)
+	var sortedOrder []string
 
 	for vertex := range g.AdjList {
 		if visited[vertex] != 0 {
 			continue
 		}
 
-		if g.dfsSort(vertex, visited, &sortedOrder) {
+		if dfsSort(g, vertex, visited, &sortedOrder) {
 			return nil, fmt.Errorf("graph contains a cycle, topological sort not possible")
 		}
 	}
@@ -57,11 +28,12 @@ func (g *DirectedGraph) TopologicalSort() ([]int, error) {
 
 // dfsSort is a helper function for the recursive DFS-based topological sort.
 // It returns true if a cycle is detected during traversal, false otherwise.
-func (g *DirectedGraph) dfsSort(v int, visited map[int]int, sortedOrder *[]int) bool {
+func dfsSort(g WeightedGraph, v string, visited map[string]int, sortedOrder *[]string) bool {
 	visited[v] = 1
 
-	for _, neighbor := range g.AdjList[v] {
+	for _, edge := range g.AdjList[v] {
 		// cycle detected
+		neighbor := edge.To
 		if visited[neighbor] == 1 {
 			return true
 		}
@@ -70,7 +42,7 @@ func (g *DirectedGraph) dfsSort(v int, visited map[int]int, sortedOrder *[]int) 
 			continue
 		}
 
-		if g.dfsSort(neighbor, visited, sortedOrder) {
+		if dfsSort(g, neighbor, visited, sortedOrder) {
 			return true
 		}
 	}

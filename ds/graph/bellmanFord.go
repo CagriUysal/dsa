@@ -2,11 +2,6 @@ package graph
 
 import "math"
 
-type Path struct {
-	distances map[string]int
-	parents   map[string]*string
-}
-
 // BellmanFord calculates the shortest paths from a single source vertex
 // in a weighted graph. It can handle negative edge weights and detects
 // negative weight cycles reachable from the source.
@@ -21,9 +16,9 @@ type Path struct {
 //	*Path: A pointer to a Path struct containing distances and parents,
 //	       or nil if a negative cycle is detected.
 //	bool: True if shortest paths are found without negative cycles,
-//	      False if a negative cycle reachable from the source is detected.
-func BellmanFord(g WeightedGraph, sourceVertex string) (*Path, bool) {
-	path := &Path{
+//	      False if a negative cycle reachable from the source is detectd.
+func BellmanFord(g WeightedGraph, sourceVertex string) (*ShortestPath, bool) {
+	path := &ShortestPath{
 		distances: make(map[string]int),
 		parents:   make(map[string]*string),
 	}
