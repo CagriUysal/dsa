@@ -32,7 +32,8 @@ type Edge struct {
 }
 
 type WeightedGraph struct {
-	AdjList map[string][]Edge
+	AdjList  map[string][]Edge
+	directed bool
 }
 
 func (g *WeightedGraph) AddVertex(v string) {
@@ -54,5 +55,15 @@ func (g *WeightedGraph) AddEdge(from string, to string, weight int) {
 	g.AddVertex(to)
 
 	g.AdjList[from] = append(g.AdjList[from], Edge{From: from, To: to, Weight: weight})
-	g.AdjList[to] = append(g.AdjList[to], Edge{From: to, To: from, Weight: weight})
+
+	if !g.directed {
+		g.AdjList[to] = append(g.AdjList[to], Edge{From: to, To: from, Weight: weight})
+	}
+}
+
+func NewWeightedGraph(directed bool) *WeightedGraph {
+	return &WeightedGraph{
+		AdjList:  make(map[string][]Edge),
+		directed: directed,
+	}
 }
