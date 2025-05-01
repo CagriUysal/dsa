@@ -1,6 +1,6 @@
 package graph
 
-func (g *AdjListGraph) DFS(startVertex int) []int {
+func (g *UnweightedGraph) DFS(startVertex int) []int {
 	visited := make(map[int]bool)
 	visitOrder := []int{}
 
@@ -17,7 +17,7 @@ func (g *AdjListGraph) DFS(startVertex int) []int {
 	return visitOrder
 }
 
-func (g *AdjListGraph) recurseDFS(v int, visited map[int]bool, visitOrder *[]int) {
+func (g *UnweightedGraph) recurseDFS(v int, visited map[int]bool, visitOrder *[]int) {
 	visited[v] = true
 	*visitOrder = append(*visitOrder, v)
 

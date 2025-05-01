@@ -10,13 +10,13 @@ import (
 func TestAdjListGraph_BFS(t *testing.T) {
 	tests := []struct {
 		name          string
-		graph         *graph.AdjListGraph
+		graph         *graph.UnweightedGraph
 		startNode     int
 		wantDistances map[int]int
 	}{
 		{
 			name: "Simple connected graph",
-			graph: func() *graph.AdjListGraph {
+			graph: func() *graph.UnweightedGraph {
 				g := graph.NewGraph()
 				g.AddEdge(0, 1)
 				g.AddEdge(0, 2)
@@ -36,7 +36,7 @@ func TestAdjListGraph_BFS(t *testing.T) {
 		},
 		{
 			name: "Graph with disconnected component",
-			graph: func() *graph.AdjListGraph {
+			graph: func() *graph.UnweightedGraph {
 				g := graph.NewGraph()
 				g.AddEdge(0, 1)
 				g.AddEdge(2, 3)
@@ -50,7 +50,7 @@ func TestAdjListGraph_BFS(t *testing.T) {
 		},
 		{
 			name: "Graph with cycle",
-			graph: func() *graph.AdjListGraph {
+			graph: func() *graph.UnweightedGraph {
 				g := graph.NewGraph()
 				g.AddEdge(0, 1)
 				g.AddEdge(1, 2)
@@ -68,7 +68,7 @@ func TestAdjListGraph_BFS(t *testing.T) {
 		},
 		{
 			name: "Single node graph",
-			graph: func() *graph.AdjListGraph {
+			graph: func() *graph.UnweightedGraph {
 				g := graph.NewGraph()
 				g.AddVertex(0)
 				return g
@@ -84,7 +84,7 @@ func TestAdjListGraph_BFS(t *testing.T) {
 		},
 		{
 			name: "Linear graph",
-			graph: func() *graph.AdjListGraph {
+			graph: func() *graph.UnweightedGraph {
 				g := graph.NewGraph()
 				g.AddEdge(0, 1)
 				g.AddEdge(1, 2)

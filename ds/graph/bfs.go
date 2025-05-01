@@ -1,7 +1,7 @@
 package graph
 
 // runs BFS on the source `s` vertex and returns the distances for each discovered vertex
-func BFS(g *AdjListGraph, s int) map[int]int {
+func BFS(g *UnweightedGraph, s int) map[int]int {
 	visited := make(map[int]bool)
 	distances := make(map[int]int)
 
